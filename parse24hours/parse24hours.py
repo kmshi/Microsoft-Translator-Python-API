@@ -1,6 +1,9 @@
 from bs4 import BeautifulSoup,Tag,NavigableString
-import urllib,codecs
+import urllib,codecs,os
 from microsofttranslator import Translator
+
+if os.path.exists('output'): shutil.rmtree('output')
+os.makedirs('output/start-bg-pics')
 
 soup = BeautifulSoup(open("24hours.htm"),'html5lib')
 
@@ -20,7 +23,7 @@ for a in ul_tag.find_all('a'):
     caption = aSoup.find_all("span",{"class":"caption"})[0].string
     credit =  aSoup.find_all("span",{"class":"credit"})[0].string
 
-    picpath = "start-bg-pics/"+str(current)+".jpg"
+    picpath = "output/start-bg-pics/"+str(current)+".jpg"
     filename, headers = urllib.urlretrieve(imgurl,picpath)
     if not filename.endswith(picpath): shutil.copyfile(filename,picpath)
     
@@ -46,6 +49,6 @@ for a in ul_tag.find_all('a'):
         
     current = current +1
 
-fp = codecs.open("result.xml", "w", "utf-8" )
+fp = codecs.open("output/result.xml", "w", "utf-8" )
 fp.write(rSoup.prettify())
 fp.close() 
