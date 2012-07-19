@@ -35,7 +35,7 @@ def parseHTML(url,book_title):
             title,description = caption_tag.cn.string.strip().split(u'：',1)
             current = caption_tag['id']
             total = caption_tag.parent['total']   
-            source = "photograph:AP"
+            source = caption_tag['credit']
         
             #print "pic:" + url
             #print "title:" + title.encode("utf-8")
@@ -63,11 +63,11 @@ def main(args=sys.argv):
         print "issue_number: for example -- 0001 \n"
         return 1
     else:
-        shutil.copytree('fonts','output/fonts')
-        shutil.copytree('images','output/images')
-        shutil.copytree('inc','output/inc')
-        shutil.copytree('js','output/js')
-        shutil.copytree('styles','output/styles')
+        if not os.path.exists('output/fonts'): shutil.copytree('fonts','output/fonts')
+        if not os.path.exists('output/images'): shutil.copytree('images','output/images')
+        if not os.path.exists('output/inc'): shutil.copytree('inc','output/inc')
+        if not os.path.exists('output/js'): shutil.copytree('js','output/js')
+        if not os.path.exists('output/styles'): shutil.copytree('styles','output/styles')
         
         book_title = u'环球'+ args[1]
         parseHTML("output/result.xml",book_title)
