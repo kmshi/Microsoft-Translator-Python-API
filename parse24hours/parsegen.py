@@ -30,14 +30,14 @@ def parseHTML(url,book_title):
     #soup.prettify()
     
     contents = list()
+    captions = soup.find_all('caption')
+    total = len(captions)
     
-    for caption_tag in soup.find_all('caption'):
-            title,description = caption_tag.cn.string.strip().split(u'：',1)
+    for caption_tag in captions:
+            title,description = caption_tag.cn.string.strip().split(u':',1)
             current = caption_tag['id']
-            total = caption_tag.parent['total']   
             source = caption_tag['credit']
         
-            #print "pic:" + url
             #print "title:" + title.encode("utf-8")
             #print "description:" + description.encode("utf-8")
             #print "total:" + total
